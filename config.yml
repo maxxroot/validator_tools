@@ -1,0 +1,6 @@
+# config.yml
+
+target_height: 10000
+source_directory: /chemin/vers/votre/repo
+branch_name: votre_branche
+service_name: nom_de_votre_service
