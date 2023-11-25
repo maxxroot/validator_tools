@@ -30,19 +30,17 @@ def watch_block_until_height():
     config = load_config()
 
     if config is None:
-        log("Erreur lors de la lecture du fichier de configuration.", "program_log.log")
+        log("Erreur lors de la lecture du fichier de configuration.", "auto_upgrade.log")
         return
 
     target_height = config.get("target_height", 0)
     source_directory = config.get("source_directory", "")
     branch_name = config.get("branch_name", "")
     service_name = config.get("service_name", "")
-    log_file = config.get("log_file", "program_log.log")
+    log_file = config.get("log_file", "auto_upgrade.log")
 
-    url = "http://localhost:26657"  # Remplacez ceci par l'URL correcte de votre validateur RPC
+    url = "http://localhost:26657"  # Remplacez par l'URL de votre RPC
     event_type = "NewBlock"
-
-    log("Début du programme.", log_file)
 
     while True:
         try:
@@ -76,15 +74,11 @@ def watch_block_until_height():
 
                 log(f"Service {service_name} redémarré avec succès!", log_file)
 
-                break  # Sortez de la boucle une fois que la hauteur cible est atteinte
+                break  # Sort de la boucle une fois la hauteur de block atteinte
         except Exception as e:
-            # Écrivez les erreurs dans le fichier de logs
             log(f"Erreur non liée aux commandes subprocess : {e}", log_file)
 
-        # Ajoutez une petite pause pour éviter une utilisation excessive des ressources
-        time.sleep(1)
-
-    log("Fin du programme.", log_file)
+        time.sleep(10)
 
 if __name__ == "__main__":
     watch_block_until_height()
